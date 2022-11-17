@@ -30,6 +30,9 @@ public class ImovelDesejadoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") Long id) {service.delete(id);}
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ImovelDesejado atualizar(@PathVariable("id") Long id, @RequestBody ImovelDesejado imovelDesejado) {return service.atualizarImovelDesejado(id, imovelDesejado).getBody();}
+
 
 
 }
