@@ -27,12 +27,20 @@ public class ImovelDesejadoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ImovelDesejado consultar(@PathVariable("id") Long id) {return service.consultar(id);}
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id) {service.delete(id);}
-
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ImovelDesejado atualizar(@PathVariable("id") Long id, @RequestBody ImovelDesejado imovelDesejado) {return service.atualizarImovelDesejado(id, imovelDesejado).getBody();}
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id) {service.delete(id);}
 
+
+    //paths que envolve o id do usuário
+    @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
+    public List<ImovelDesejado> listarImoveisDesejadosDoUsuario(@PathVariable("id") int id) {return service.listarImoveisDoUsuario(id);}
+
+    @RequestMapping(value = "/usuario/{idUsuario}/imovel/{id}", method = RequestMethod.GET)
+    public ImovelDesejado consultarImoveldoUsuario(@PathVariable("idUsuario") int idUsuario ,@PathVariable("id") int id){
+        return service.consultarImoveldoUsuario(idUsuario, id);
+    }
 
 }

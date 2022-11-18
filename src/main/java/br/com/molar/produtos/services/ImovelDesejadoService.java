@@ -50,5 +50,11 @@ public class ImovelDesejadoService {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
+    
+    public List<ImovelDesejado> listarImoveisDoUsuario(int idUsuario) {return repository.findByIdUsuario(idUsuario);}
+
+    public ImovelDesejado consultarImoveldoUsuario(int idUsuario, long id){
+        return repository.findByIdUsuarioEIdImovel(idUsuario, id);
+    }
 
 }
