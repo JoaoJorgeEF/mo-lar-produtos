@@ -23,15 +23,32 @@ public class ImovelOfertadoController {
 
     @GetMapping(value = "/{id}")
     public ImovelOfertado buscar(@PathVariable long id){
-        return service.consultar(id);
+        try {
+            return service.consultar(id);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage());
+        }
     }
 
     @GetMapping(value = "/usuario/{id}")
-    public List<ImovelOfertado> listarImoveisOfertadosDoUsuario(@PathVariable("id") long id) {return service.listarImoveisDoUsuario(id);}
+    public List<ImovelOfertado> listarImoveisOfertadosDoUsuario(@PathVariable("id") long id) {
+        try {
+            return service.listarImoveisDoUsuario(id);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
 
     @PostMapping
     public ImovelOfertado cadastrar(@RequestBody ImovelOfertado imovel){
-        return service.cadastrar(imovel);
+        try{
+            return service.cadastrar(imovel);
+        } catch(Exception ex){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage());
+        }
     }
 
     @PutMapping(value = "/{id}")
