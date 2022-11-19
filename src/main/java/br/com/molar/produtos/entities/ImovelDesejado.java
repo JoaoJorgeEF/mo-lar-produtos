@@ -1,15 +1,16 @@
 package br.com.molar.produtos.entities;
 
 import br.com.molar.produtos.entities.base.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 @Getter
@@ -20,19 +21,26 @@ import java.math.BigDecimal;
 @Table(name = "imoveis_desejados")
 public class ImovelDesejado extends BaseEntity<Long> {
 
+
     @Column(name = "tipo_imovel", nullable = false)
     public TipoImovel tipoImovel;
 
     @Column(nullable = false, length = 50)
+    @Size(min = 1, max = 50)
+    @NotBlank(message = "É necessario informar o bairro")
     public String bairro;
 
     @Column(nullable = false)
+    @Min(30)
+    @NotNull(message = "É necessário informar a área do imóvel")
     public double area;
 
     @Column(name = "numero_quartos", nullable = false)
+    @Min(1)
     public int numeroQuartos;
 
     @Column(name = "numero_banheiros", nullable = false)
+    @Min(1)
     public int numeroBanheiros;
 
     @Column(name = "numero_vagas_garagem", nullable = false)
