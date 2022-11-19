@@ -15,5 +15,16 @@ public interface UsuarioClient {
     List<Usuario> buscarUsuarios();
 
     @RequestMapping(method = RequestMethod.GET, value = "api/v1/usuarios/{id}")
-    Usuario buscarUsuario(@PathVariable long id);
+    Usuario buscar(@PathVariable long id);
+
+    default Usuario buscarUsuario(long id) {
+        Usuario usuario = null;
+        try{
+            usuario = buscar(id);
+        } catch(Exception ex){
+            return null;
+        }
+        return usuario;
+    }
+
 }
