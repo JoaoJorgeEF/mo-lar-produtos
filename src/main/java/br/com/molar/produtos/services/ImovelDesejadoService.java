@@ -44,13 +44,13 @@ public class ImovelDesejadoService {
             imovelDesejado.setPreco(imovel2.getPreco());
             imovelDesejado.setUsuario_id(imovel2.getUsuario_id());
             repository.save(imovelDesejado);
-            return new ResponseEntity<ImovelDesejado>(imovelDesejado, HttpStatus.OK);
+            return new ResponseEntity<>(imovelDesejado, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
-    
+
     public List<ImovelDesejado> listarImoveisDoUsuario(int idUsuario) {return repository.findByIdUsuario(idUsuario);}
 
     public ImovelDesejado consultarImoveldoUsuario(int idUsuario, long id){
