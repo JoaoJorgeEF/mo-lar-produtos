@@ -25,8 +25,8 @@ public class ImovelOfertadoService {
     public ImovelOfertado consultar(long id) throws Exception{
         ImovelOfertado imovel = repository.findById(id).stream().findFirst().orElse(null);
         if (imovel != null){
-            Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
-            if (usuario == null) throw new Exception("Não foi encotrado usuário com este Id");
+            Usuario usuario = buscarUsuario(imovel.getUsuario_id());
+            if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
             imovel.setUsuario(usuario);
         }
         return imovel;
@@ -36,7 +36,10 @@ public class ImovelOfertadoService {
     public List<ImovelOfertado> listar(){
         List<ImovelOfertado> imoveis = repository.findAll();
         for (ImovelOfertado imovel : imoveis) {
-            imovel.setUsuario(usuarioClient.buscarUsuario(imovel.getUsuario_id()));
+            Usuario usuario = buscarUsuario(imovel.getUsuario_id());
+            if (usuario != null){
+                imovel.setUsuario(usuario);
+            }
         }
 
         return imoveis;
@@ -44,8 +47,8 @@ public class ImovelOfertadoService {
 
     @CachePut(value = "imoveisOfertados", key = "#imovel.id")
     public ImovelOfertado cadastrar(ImovelOfertado imovel) throws Exception{
-        Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
-        if (usuario == null) throw new Exception("Não foi encotrado usuário com este Id");
+        Usuario usuario = buscarUsuario(imovel.getUsuario_id());
+        if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
 
@@ -57,8 +60,8 @@ public class ImovelOfertadoService {
         if (imovel == null || imovel.getId() <= 0 || id <= 0) throw new Exception("Id de imóvel informado não existe");
         if (imovel.getId() != id) throw new Exception("Id informado no Path difere do Id informado no body");
 
-        Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
-        if (usuario == null) throw new Exception("Não foi encotrado usuário com este Id");
+        Usuario usuario = buscarUsuario(imovel.getUsuario_id());
+        if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
 
@@ -79,8 +82,8 @@ public class ImovelOfertadoService {
     }
 
     public List<ImovelOfertado> listarImoveisDoUsuario(long idUsuario) throws Exception {
-        Usuario usuario = usuarioClient.buscarUsuario(idUsuario);
-        if (usuario == null) throw new Exception("Não foi encotrado usuário com este Id");
+        Usuario usuario = buscarUsuario(idUsuario);
+        if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
 
         List<ImovelOfertado> imoveis = repository.findByIdUsuario(usuario.getId());
         if (imoveis != null) {
@@ -90,6 +93,17 @@ public class ImovelOfertadoService {
         }
 
         return imoveis;
+    }
+
+    private Usuario buscarUsuario(long id) {
+        Usuario usuario = null;
+        try{
+            usuario = usuarioClient.buscarUsuario(id);
+        } catch(Exception ex){
+            return null;
+        }
+
+        return usuario;
     }
 
 }
