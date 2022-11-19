@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -27,15 +30,21 @@ public class ImovelOfertado extends BaseEntity<Long> {
     public TipoImovel tipoImovel;
 
     @Column(nullable = false, length = 50)
+    @Size(min = 1, max = 50)
+    @NotBlank(message = "É necessario informar o bairro")
     public String bairro;
 
     @Column(nullable = false)
+    @Min(30)
+    @NotNull(message = "É necessário informar a área do imóvel")
     public double area;
 
     @Column(name = "numero_quartos", nullable = false)
+    @Min(1)
     public int numeroQuartos;
 
     @Column(name = "numero_banheiros", nullable = false)
+    @Min(1)
     public int numeroBanheiros;
 
     @Column(name = "numero_vagas_garagem", nullable = false)
