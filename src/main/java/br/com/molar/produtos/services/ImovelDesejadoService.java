@@ -3,6 +3,9 @@ package br.com.molar.produtos.services;
 import br.com.molar.produtos.entities.ImovelDesejado;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,20 +19,25 @@ public class ImovelDesejadoService {
     @Autowired
     private ImovelDesejadoRepository repository;
 
+    @CachePut(value = "imoveisDesejados", key = "#imovel.id")
     public ImovelDesejado cadastrar(ImovelDesejado imovel){
        return repository.save(imovel);
     }
 
+    @Cacheable(value = "imoveisDesejados", key = "#id")
     public ImovelDesejado consultar(long id){
         return repository.findById(id).stream().findFirst().orElse(null);
     }
 
+    @Cacheable(value = "imoveisDesejados")
     public List<ImovelDesejado> listar(){
         return repository.findAll();
     }
 
+    @CacheEvict(value = "imoveisDesejados", allEntries = true)
     public void delete(long id) {repository.deleteById(id);}
 
+    @CachePut(value = "imoveisDesejados", key = "#id")
     public ResponseEntity<ImovelDesejado> atualizarImovelDesejado(long id, ImovelDesejado imovel2) {
 
         Optional<ImovelDesejado> imovel = repository.findById(id);
