@@ -1,7 +1,9 @@
 package br.com.molar.produtos.controllers;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
+import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.services.ImovelDesejadoService;
+import br.com.molar.produtos.services.UsuarioClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +43,10 @@ public class ImovelDesejadoController {
     public ImovelDesejado consultarImoveldoUsuario(@PathVariable("idUsuario") int idUsuario ,@PathVariable("id") int id){
         return service.consultarImoveldoUsuario(idUsuario, id);
     }
+
+//    @GetMapping(value= "/usuarios")
+//    public List<Usuario> teste(){
+//        return usuarioClient.buscarUsuarios();
+//    }
 
 }
