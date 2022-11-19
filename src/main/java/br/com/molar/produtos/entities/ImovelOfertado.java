@@ -1,6 +1,7 @@
 package br.com.molar.produtos.entities;
 
 import br.com.molar.produtos.entities.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +47,9 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @Column(nullable = true)
     public String extras;
 
-    @OneToMany(mappedBy = "imovelOfertado")
+    @Column
+    @JsonIgnore
+    @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER)
     public List<Foto> fotos;
 
     public int usuario_id;
