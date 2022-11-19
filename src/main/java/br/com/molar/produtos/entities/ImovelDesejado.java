@@ -22,17 +22,14 @@ import java.math.BigDecimal;
 public class ImovelDesejado extends BaseEntity<Long> {
 
 
-    @Column(name = "tipo_imovel", nullable = false)
+    @Column(name = "tipo_imovel")
+    @NotNull(message = "Informe um tipo de imóvel válido")
     public TipoImovel tipoImovel;
 
-    @Column(nullable = false, length = 50)
-    @Size(min = 1, max = 50)
-    @NotBlank(message = "É necessario informar o bairro")
+    @NotBlank(message = "O bairro deve ser informado")
     public String bairro;
 
-    @Column(nullable = false)
     @Min(30)
-    @NotNull(message = "É necessário informar a área do imóvel")
     public double area;
 
     @Column(name = "numero_quartos", nullable = false)
@@ -49,6 +46,7 @@ public class ImovelDesejado extends BaseEntity<Long> {
     @Column(nullable = false, columnDefinition = "DECIMAL(7,2) DEFAULT 0.00")
     public BigDecimal preco;
 
+    @NotNull(message = "É necessário informar o id do cliente")
     public int usuario_id;
 
     @Transient

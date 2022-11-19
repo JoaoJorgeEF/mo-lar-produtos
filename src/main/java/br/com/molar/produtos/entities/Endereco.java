@@ -10,10 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario extends BaseEntity<Integer> {
-    public String nome;
-    public String cpf;
-    public String email;
-    public String telefone;
-    public Endereco endereco;
+public class Endereco extends BaseEntity<Integer> {
+    public String logradouro;
+    public String bairro;
+    public String numero_residencia;
+    public String cep;
 }
