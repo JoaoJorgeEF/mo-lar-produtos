@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class ImovelDesejadoController {
     private ImovelDesejadoService service;
 
     @PostMapping
-    public ImovelDesejado cadastrar(@RequestBody ImovelDesejado imovel){
+    public ImovelDesejado cadastrar(@RequestBody @Valid ImovelDesejado imovel){
         try {
             return service.cadastrar(imovel);
         } catch(Exception ex){
@@ -34,7 +35,7 @@ public class ImovelDesejadoController {
     }
 
     @GetMapping(value = "/{id}")
-    public ImovelDesejado consultar(@PathVariable("id") Long id) {
+    public ImovelDesejado consultar(@PathVariable("id") long id) {
         try {
             return service.consultar(id);
         } catch(Exception ex){
