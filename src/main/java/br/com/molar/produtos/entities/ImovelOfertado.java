@@ -51,7 +51,7 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @Column(name = "numero_vagas_garagem", nullable = false)
     public int numeroVagasGaragem;
 
-    @Column(nullable = false, columnDefinition = "DECIMAL(7,2) DEFAULT 0.00")
+    @Column(nullable = false)
     public BigDecimal preco;
 
     @Column(nullable = true)
@@ -59,7 +59,7 @@ public class ImovelOfertado extends BaseEntity<Long> {
 
     @Column
 //    @JsonIgnore
-    @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<Foto> fotos;
     
     @NotNull(message = "É necessário informar o id do cliente")

@@ -19,6 +19,7 @@ public class ImovelDesejadoController {
     @Autowired
     private ImovelDesejadoService service;
 
+    @CrossOrigin
     @PostMapping
     public ImovelDesejado cadastrar(@RequestBody @Valid ImovelDesejado imovel){
         try {
@@ -29,11 +30,13 @@ public class ImovelDesejadoController {
         }
     }
 
+    @CrossOrigin
     @GetMapping
     public List<ImovelDesejado> listar(){
         return service.listar();
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
     public ImovelDesejado consultar(@PathVariable("id") long id) {
         try {
@@ -44,6 +47,7 @@ public class ImovelDesejadoController {
         }
     }
 
+    @CrossOrigin
     @PutMapping(value = "/{id}")
     public ImovelDesejado atualizar(@PathVariable("id") Long id, @RequestBody ImovelDesejado imovelDesejado) {
         try {
@@ -54,6 +58,7 @@ public class ImovelDesejadoController {
         }
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public boolean delete(@PathVariable("id") Long id) {
         try {
@@ -65,6 +70,7 @@ public class ImovelDesejadoController {
     }
 
     //paths que envolve o id do usuário
+    @CrossOrigin
     @GetMapping(value = "/usuario/{id}")
     public List<ImovelDesejado> listarImoveisDesejadosDoUsuario(@PathVariable("id") int id) {
         try {
@@ -75,6 +81,7 @@ public class ImovelDesejadoController {
         }
     }
 
+    @CrossOrigin
     @GetMapping(value = "/usuario/{idUsuario}/imovel/{id}")
     public ImovelDesejado consultarImoveldoUsuario(@PathVariable("idUsuario") int idUsuario ,@PathVariable("id") int id){
         try {

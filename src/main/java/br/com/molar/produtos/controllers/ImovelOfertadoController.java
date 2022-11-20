@@ -16,11 +16,13 @@ public class ImovelOfertadoController {
     @Autowired
     private ImovelOfertadoService service;
 
+    @CrossOrigin
     @GetMapping
     public List<ImovelOfertado> listar(){
         return service.listar();
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{id}")
     public ImovelOfertado buscar(@PathVariable long id){
         try {
@@ -31,6 +33,7 @@ public class ImovelOfertadoController {
         }
     }
 
+    @CrossOrigin
     @GetMapping(value = "/usuario/{id}")
     public List<ImovelOfertado> listarImoveisOfertadosDoUsuario(@PathVariable("id") long id) {
         try {
@@ -41,6 +44,7 @@ public class ImovelOfertadoController {
         }
     }
 
+    @CrossOrigin
     @PostMapping
     public ImovelOfertado cadastrar(@RequestBody ImovelOfertado imovel){
         try{
@@ -51,6 +55,7 @@ public class ImovelOfertadoController {
         }
     }
 
+    @CrossOrigin
     @PutMapping(value = "/{id}")
     public ImovelOfertado atualizar(@PathVariable long id, @RequestBody ImovelOfertado imovel){
         try{
@@ -62,6 +67,7 @@ public class ImovelOfertadoController {
 
     }
 
+    @CrossOrigin
     @DeleteMapping(value = "/{id}")
     public boolean excluir(@PathVariable long id){
         try{
