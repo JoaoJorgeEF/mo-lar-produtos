@@ -3,6 +3,7 @@ package br.com.molar.produtos.services;
 import br.com.molar.produtos.entities.ImovelDesejado;
 import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
+import br.com.molar.produtos.exception.BadRequestException;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class ImovelDesejadoService {
     @CachePut(value = "imoveisDesejados", key = "#imovel.id")
     public ImovelDesejado cadastrar(ImovelDesejado imovel) throws Exception {
         Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
-        if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
+        if (usuario == null) throw new BadRequestException("Não foi encontrado usuário com este Id");
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
 
@@ -37,14 +39,15 @@ public class ImovelDesejadoService {
 
     @Cacheable(value = "imoveisDesejados", key = "#id")
     public ImovelDesejado consultar(long id) throws Exception{
-        ImovelDesejado imovel = repository.findById(id).stream().findFirst().orElse(null);
-        if (imovel != null){
+        if (id <= 0) throw new Exception("Id informado não existe");
+        ImovelDesejado imovel = repository.findById(id).orElseThrow( () -> new Exception("Imóvel não encontrado para o ID inforadmo") );
+        if (repository.existsById(id)){
             Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
             if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
             imovel.setUsuario(usuario);
         }
         return imovel;
-    }
+}
 
 //    @Cacheable(value = "imoveisDesejados")
     public List<ImovelDesejado> listar(){
@@ -62,7 +65,7 @@ public class ImovelDesejadoService {
     @CacheEvict(value = "imoveisDesejados", allEntries = true)
     public boolean delete(long id) throws Exception {
         if (id <= 0) throw new Exception("Id informado não existe");
-        if (!repository.existsById(id)) throw new ObjectNotFoundException(Long.class, "Objeto com Id informado não encontrado na base");
+        if (!repository.existsById(id)) throw new Exception("Não existe um imóvel para o Id informado");
 
         repository.deleteById(id);
 
