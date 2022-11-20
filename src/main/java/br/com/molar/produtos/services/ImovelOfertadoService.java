@@ -32,7 +32,7 @@ public class ImovelOfertadoService {
         return imovel;
     }
 
-    @Cacheable(value = "imoveisOfertados")
+//    @Cacheable(value = "imoveisOfertados", key= "#root.method.name")
     public List<ImovelOfertado> listar(){
         List<ImovelOfertado> imoveis = repository.findAll();
         for (ImovelOfertado imovel : imoveis) {

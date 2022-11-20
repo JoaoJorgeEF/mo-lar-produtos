@@ -46,7 +46,7 @@ public class ImovelDesejadoService {
         return imovel;
     }
 
-    @Cacheable(value = "imoveisDesejados")
+//    @Cacheable(value = "imoveisDesejados")
     public List<ImovelDesejado> listar(){
         List<ImovelDesejado> imoveis = repository.findAll();
         for (ImovelDesejado imovel : imoveis) {
@@ -110,6 +110,7 @@ public class ImovelDesejadoService {
         return imoveis;
     }
 
+    @Cacheable(value = "imoveisDesejados", key = "#id")
     public ImovelDesejado consultarImoveldoUsuario(int idUsuario, long id) throws Exception{
         Usuario usuario = usuarioClient.buscarUsuario(idUsuario);
         if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
