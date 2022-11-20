@@ -57,7 +57,7 @@ public class ImovelOfertado extends BaseEntity<Long> {
     public String extras;
 
     @Column
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER)
     public List<Foto> fotos;
 

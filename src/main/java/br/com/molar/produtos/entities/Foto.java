@@ -1,6 +1,7 @@
 package br.com.molar.produtos.entities;
 
 import br.com.molar.produtos.entities.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,8 @@ public class Foto extends BaseEntity<Long> {
     @Lob
     public byte[] data;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JsonIgnore
     @JoinColumn(name = "imovel_ofertado_id")
     public ImovelOfertado imovelOfertado;
 }

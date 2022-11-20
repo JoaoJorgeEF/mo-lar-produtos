@@ -1,7 +1,9 @@
 package br.com.molar.produtos.services;
 
+import br.com.molar.produtos.entities.Foto;
 import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
+import br.com.molar.produtos.repository.FotoRepository;
 import br.com.molar.produtos.repository.ImovelOfertadoRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class ImovelOfertadoService {
     private ImovelOfertadoRepository repository;
 
     @Autowired
+    private FotoRepository fotoRepository;
+
+    @Autowired
     private UsuarioClient usuarioClient;
 
     @Cacheable(value = "imoveisOfertados", key = "#id")
@@ -32,7 +37,7 @@ public class ImovelOfertadoService {
         return imovel;
     }
 
-    @Cacheable(value = "imoveisOfertados")
+//    @Cacheable(value = "imoveisOfertados", key= "#root.method.name")
     public List<ImovelOfertado> listar(){
         List<ImovelOfertado> imoveis = repository.findAll();
         for (ImovelOfertado imovel : imoveis) {
@@ -51,6 +56,13 @@ public class ImovelOfertadoService {
         if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
+
+        if (imovel.getFotos() != null && imovel.getFotos().size() > 0){
+            for (Foto foto : imovel.getFotos()) {
+                foto.setImovelOfertado(imovel);
+                fotoRepository.save(foto);
+            }
+        }
 
         return repository.save(imovel);
     }
