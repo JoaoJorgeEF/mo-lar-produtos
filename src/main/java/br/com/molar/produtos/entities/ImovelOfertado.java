@@ -24,9 +24,11 @@ import java.util.List;
 public class ImovelOfertado extends BaseEntity<Long> {
 
     @Column(nullable = false, length = 100)
+    @NotNull(message = "É necessário informar o título do imóvel ofertado")
     public String titulo;
 
     @Column(name = "tipo_imovel", nullable = false)
+    @NotNull(message = "É necessário informar o tipo do imóvel desejado")
     public TipoImovel tipoImovel;
 
     @Column(nullable = false, length = 50)
@@ -35,16 +37,15 @@ public class ImovelOfertado extends BaseEntity<Long> {
     public String bairro;
 
     @Column(nullable = false)
-    @Min(30)
-    @NotNull(message = "É necessário informar a área do imóvel")
+    @Min(value = 30, message = "O valor da área deve ser igual ou maior a 30m².")
     public double area;
 
     @Column(name = "numero_quartos", nullable = false)
-    @Min(1)
+    @Min(value = 1, message = "A quantidade mínima de quartos deve ser 1.")
     public int numeroQuartos;
 
     @Column(name = "numero_banheiros", nullable = false)
-    @Min(1)
+    @Min(value = 1, message = "O número mínimo de banheiros deve ser 1.")
     public int numeroBanheiros;
 
     @Column(name = "numero_vagas_garagem", nullable = false)
@@ -60,7 +61,8 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @JsonIgnore
     @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER)
     public List<Foto> fotos;
-
+    
+    @NotNull(message = "É necessário informar o id do cliente")
     public int usuario_id;
 
     @Transient

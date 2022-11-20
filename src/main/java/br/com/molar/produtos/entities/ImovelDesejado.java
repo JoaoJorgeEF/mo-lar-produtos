@@ -7,10 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Getter
@@ -23,21 +20,21 @@ public class ImovelDesejado extends BaseEntity<Long> {
 
 
     @Column(name = "tipo_imovel")
-    @NotNull(message = "Informe um tipo de imóvel válido")
+    @NotNull(message = "É necessário informar o tipo do imóvel desejado")
     public TipoImovel tipoImovel;
 
-    @NotBlank(message = "O bairro deve ser informado")
+    @NotBlank(message = "É necessario informar o bairro")
     public String bairro;
 
-    @Min(30)
+    @Min(value = 30, message = "O valor da área deve ser igual ou maior a 30m².")
     public double area;
 
     @Column(name = "numero_quartos", nullable = false)
-    @Min(1)
+    @Min(value = 1, message = "A quantidade mínima de quartos deve ser 1.")
     public int numeroQuartos;
 
     @Column(name = "numero_banheiros", nullable = false)
-    @Min(1)
+    @Min(value = 1, message = "O número mínimo de banheiros deve ser 1.")
     public int numeroBanheiros;
 
     @Column(name = "numero_vagas_garagem", nullable = false)
