@@ -40,7 +40,7 @@ public class ImovelDesejadoService {
     @Cacheable(value = "imoveisDesejados", key = "#id")
     public ImovelDesejado consultar(long id) throws Exception{
         if (id <= 0) throw new Exception("Id informado não existe");
-        ImovelDesejado imovel = repository.findById(id).orElseThrow( () -> new Exception("Imóvel não encontrado para o ID inforadmo") );
+        ImovelDesejado imovel = repository.findById(id).orElseThrow( () -> new Exception("Imóvel não encontrado para o ID informado") );
         if (repository.existsById(id)){
             Usuario usuario = usuarioClient.buscarUsuario(imovel.getUsuario_id());
             if (usuario == null) throw new Exception("Não foi encontrado usuário com este Id");
