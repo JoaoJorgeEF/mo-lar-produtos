@@ -49,7 +49,7 @@ public class ImovelDesejadoController {
 
     @CrossOrigin
     @PutMapping(value = "/{id}")
-    public ImovelDesejado atualizar(@PathVariable("id") Long id, @RequestBody ImovelDesejado imovelDesejado) {
+    public ImovelDesejado atualizar(@PathVariable("id") Long id, @RequestBody @Valid ImovelDesejado imovelDesejado) {
         try {
             return service.atualizarImovelDesejado(id, imovelDesejado);
         } catch(Exception ex){
