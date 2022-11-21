@@ -38,10 +38,11 @@ public class ImovelDesejado extends BaseEntity<Long> {
     public int numeroBanheiros;
 
     @Column(name = "numero_vagas_garagem", nullable = false)
-    @Min(value = 0, message = "É necessário informar o número de vagas de garagem, caso não queira, informe 0.")
+    @NotNull( message = "É necessário informar o número de vagas de garagem, caso não queira, informe 0.")
     public int numeroVagasGaragem;
 
     @Column(nullable = false)
+    @Min(value = 1, message = "O valor mínimo para preço é 1.")
     public BigDecimal preco;
 
     @NotNull(message = "É necessário informar o id do cliente")
