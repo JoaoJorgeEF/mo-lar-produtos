@@ -27,12 +27,11 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @NotNull(message = "É necessário informar o título do imóvel ofertado")
     public String titulo;
 
-    @Column(name = "tipo_imovel", nullable = false)
+    @Column(name = "tipo_imovel")
     @NotNull(message = "É necessário informar o tipo do imóvel desejado")
     public TipoImovel tipoImovel;
 
     @Column(nullable = false, length = 50)
-    @Size(min = 1, max = 50)
     @NotBlank(message = "É necessario informar o bairro")
     public String bairro;
 
@@ -52,6 +51,7 @@ public class ImovelOfertado extends BaseEntity<Long> {
     public int numeroVagasGaragem;
 
     @Column(nullable = false)
+    @Min(value = 1, message = "O valor mínimo para preço é 1.")
     public BigDecimal preco;
 
     @Column(nullable = true)

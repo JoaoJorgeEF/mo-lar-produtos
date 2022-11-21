@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -46,7 +47,7 @@ public class ImovelOfertadoController {
 
     @CrossOrigin
     @PostMapping
-    public ImovelOfertado cadastrar(@RequestBody ImovelOfertado imovel){
+    public ImovelOfertado cadastrar(@RequestBody @Valid ImovelOfertado imovel){
         try{
             return service.cadastrar(imovel);
         } catch(Exception ex){
@@ -57,7 +58,7 @@ public class ImovelOfertadoController {
 
     @CrossOrigin
     @PutMapping(value = "/{id}")
-    public ImovelOfertado atualizar(@PathVariable long id, @RequestBody ImovelOfertado imovel){
+    public ImovelOfertado atualizar(@PathVariable long id, @RequestBody @Valid ImovelOfertado imovel){
         try{
             return service.atualizar(id, imovel);
         } catch(Exception ex){
