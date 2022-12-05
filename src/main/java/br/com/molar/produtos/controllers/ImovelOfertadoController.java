@@ -79,7 +79,7 @@ public class ImovelOfertadoController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/{id}/enfileirar")
     public void enfileirar(@PathVariable long id){
         service.enfileirar(id);
     }
