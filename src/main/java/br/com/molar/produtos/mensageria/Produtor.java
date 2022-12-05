@@ -5,7 +5,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
-public abstract class Producer {
+public abstract class Produtor {
     public static void enfileirar(Long id, Class<? extends BaseEntity> classType) throws Exception {
         if (id <= 0) throw new Exception("ID não existente");
         ConnectionFactory connectionFactory = new ConnectionFactory();

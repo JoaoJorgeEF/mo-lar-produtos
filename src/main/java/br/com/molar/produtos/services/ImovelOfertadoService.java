@@ -3,9 +3,9 @@ package br.com.molar.produtos.services;
 import br.com.molar.produtos.entities.Foto;
 import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
+import br.com.molar.produtos.mensageria.Produtor;
 import br.com.molar.produtos.repository.FotoRepository;
 import br.com.molar.produtos.repository.ImovelOfertadoRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -105,6 +105,16 @@ public class ImovelOfertadoService {
             }
         }
         return imoveis;
+    }
+
+
+    public boolean enfileirar(Long id){
+        try {
+            Produtor.enfileirar(id, ImovelOfertado.class);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }
