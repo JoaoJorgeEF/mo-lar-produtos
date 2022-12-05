@@ -14,7 +14,6 @@ public abstract class Producer {
         connectionFactory.setUsername("mqadmin");
         connectionFactory.setPassword("Admin123XX_");
 
-
         String NOME_FILA = nomeDaFila(classType);
         try (Connection connection = connectionFactory.newConnection();
              Channel channel = connection.createChannel()) {
