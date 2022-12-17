@@ -62,7 +62,8 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<Foto> fotos;
 
-    @OneToMany(mappedBy = "imovelOfertado", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "imovelOfertado")
+    @JsonIgnore
     public List<Match> matches;
     
     @NotNull(message = "É necessário informar o id do cliente")
