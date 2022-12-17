@@ -1,19 +1,14 @@
 package br.com.molar.produtos.services;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
-import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.exception.BadRequestException;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;

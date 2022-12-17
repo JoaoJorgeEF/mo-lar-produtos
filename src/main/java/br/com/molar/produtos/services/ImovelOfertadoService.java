@@ -3,9 +3,9 @@ package br.com.molar.produtos.services;
 import br.com.molar.produtos.entities.Foto;
 import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
+import br.com.molar.produtos.mensageria.Produtor;
 import br.com.molar.produtos.repository.FotoRepository;
 import br.com.molar.produtos.repository.ImovelOfertadoRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -79,7 +79,7 @@ public class ImovelOfertadoService {
         imovel.setUsuario_id(usuario.getId());
 
         ImovelOfertado imovelDoRepo = repository.findById(imovel.getId()).stream().findFirst().orElse(null);
-        if (imovelDoRepo == null) throw new ObjectNotFoundException(ImovelOfertado.class, "Objeto para atualizar não encontrado na base");
+        if (imovelDoRepo == null) throw new Exception("Objeto para atualizar não encontrado na base");
         imovel = repository.save(imovel);
         return imovel;
     }
@@ -87,7 +87,7 @@ public class ImovelOfertadoService {
     @CacheEvict(value = "imoveisOfertados", allEntries = true)
     public boolean excluir(long id) throws Exception {
         if (id <= 0) throw new Exception("Id informado não existe");
-        if (!repository.existsById(id)) throw new ObjectNotFoundException(Long.class, "Objeto com Id informado não encontrado na base");
+        if (!repository.existsById(id)) throw new Exception("Objeto com Id informado não encontrado na base");
 
         repository.deleteById(id);
 
@@ -105,6 +105,16 @@ public class ImovelOfertadoService {
             }
         }
         return imoveis;
+    }
+
+
+    public boolean enfileirar(Long id){
+        try {
+            Produtor.enfileirar(id, ImovelOfertado.class);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }
