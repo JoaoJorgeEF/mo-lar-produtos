@@ -91,4 +91,9 @@ public class ImovelDesejadoController {
                     HttpStatus.NOT_FOUND, ex.getMessage());
         }
     }
+
+    @GetMapping("/{id}/enfileirar")
+    public void enfileirar(@PathVariable long id){
+        service.enfileirar(id);
+    }
 }

@@ -1,8 +1,10 @@
 package br.com.molar.produtos.services;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
+import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.exception.BadRequestException;
+import br.com.molar.produtos.mensageria.Produtor;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -118,6 +120,15 @@ public class ImovelDesejadoService {
         }
 
         return imovel;
+    }
+
+    public boolean enfileirar(Long id){
+        try {
+            Produtor.enfileirar(id, ImovelDesejado.class);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }
