@@ -31,7 +31,9 @@ public class ImovelDesejadoService {
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
 
-        return repository.save(imovel);
+        imovel = repository.save(imovel);
+        enfileirar(imovel.getId());
+        return imovel;
     }
 
     @Cacheable(value = "imoveisDesejados", key = "#id")
@@ -89,6 +91,7 @@ public class ImovelDesejadoService {
             imovelDesejado.setUsuario(usuario);
             imovelDesejado = repository.save(imovelDesejado);
 
+            enfileirar(imovelDesejado.getId());
             return imovelDesejado;
         }
         else

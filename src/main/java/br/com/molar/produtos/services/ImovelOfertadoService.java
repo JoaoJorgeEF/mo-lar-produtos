@@ -65,7 +65,9 @@ public class ImovelOfertadoService {
             }
         }
 
-        return repository.save(imovel);
+        imovel = repository.save(imovel);
+        enfileirar(imovel.getId());
+        return imovel;
     }
 
     @CachePut(value = "imoveisOfertados", key = "#id")
@@ -81,6 +83,7 @@ public class ImovelOfertadoService {
         ImovelOfertado imovelDoRepo = repository.findById(imovel.getId()).stream().findFirst().orElse(null);
         if (imovelDoRepo == null) throw new Exception("Objeto para atualizar não encontrado na base");
         imovel = repository.save(imovel);
+        enfileirar(imovel.getId());
         return imovel;
     }
 
