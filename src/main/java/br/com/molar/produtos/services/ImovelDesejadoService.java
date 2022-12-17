@@ -1,8 +1,10 @@
 package br.com.molar.produtos.services;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
+import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.exception.BadRequestException;
+import br.com.molar.produtos.mensageria.Produtor;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,7 +31,9 @@ public class ImovelDesejadoService {
         imovel.setUsuario(usuario);
         imovel.setUsuario_id(usuario.getId());
 
-        return repository.save(imovel);
+        imovel = repository.save(imovel);
+        enfileirar(imovel.getId());
+        return imovel;
     }
 
     @Cacheable(value = "imoveisDesejados", key = "#id")
@@ -87,6 +91,7 @@ public class ImovelDesejadoService {
             imovelDesejado.setUsuario(usuario);
             imovelDesejado = repository.save(imovelDesejado);
 
+            enfileirar(imovelDesejado.getId());
             return imovelDesejado;
         }
         else
@@ -118,6 +123,15 @@ public class ImovelDesejadoService {
         }
 
         return imovel;
+    }
+
+    public boolean enfileirar(Long id){
+        try {
+            Produtor.enfileirar(id, ImovelDesejado.class);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
 }

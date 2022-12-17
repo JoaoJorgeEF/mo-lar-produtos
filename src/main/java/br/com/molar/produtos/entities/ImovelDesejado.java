@@ -1,14 +1,13 @@
 package br.com.molar.produtos.entities;
 
 import br.com.molar.produtos.entities.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -44,6 +43,10 @@ public class ImovelDesejado extends BaseEntity<Long> {
     @Column(nullable = false)
     @Min(value = 1, message = "O valor mínimo para preço é 1.")
     public BigDecimal preco;
+
+    @OneToMany(mappedBy = "imovelDesejado")
+    @JsonIgnore
+    public List<Match> matches;
 
     @NotNull(message = "É necessário informar o id do cliente")
     public int usuario_id;
