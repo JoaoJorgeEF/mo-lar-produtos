@@ -2,16 +2,19 @@ package br.com.molar.produtos.services;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
 import br.com.molar.produtos.entities.ImovelOfertado;
+import br.com.molar.produtos.entities.Match;
 import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.exception.BadRequestException;
 import br.com.molar.produtos.mensageria.Produtor;
 import br.com.molar.produtos.repository.ImovelDesejadoRepository;
+import br.com.molar.produtos.repository.ImovelOfertadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,6 +127,28 @@ public class ImovelDesejadoService {
 
         return imovel;
     }
+
+    public List<ImovelOfertado> listarMatchesImoveisOfertados(long idImovelDesejado) throws Exception {
+        ImovelDesejado imovelDesejado = repository.findByIdImovelDesejado(idImovelDesejado);
+        if (imovelDesejado == null) throw new Exception("Não foi encontrado imóvel desejado com este Id");
+
+        List<Match> matchesDoImovel = imovelDesejado.getMatches();
+        List<ImovelOfertado> imoveis = new ArrayList<>();
+        if (matchesDoImovel != null) {
+            for (Match match : matchesDoImovel) {
+                ImovelOfertado imovelOfertado = match.getImovelOfertado();
+                if (imovelOfertado != null){
+                    Usuario usuario = usuarioClient.buscarUsuario(imovelOfertado.getUsuario_id());
+                    imovelOfertado.setUsuario(usuario);
+                    imoveis.add(imovelOfertado);
+                }
+            }
+        }
+
+        return imoveis;
+    }
+
+
 
     public boolean enfileirar(Long id){
         try {

@@ -65,6 +65,8 @@ public class ImovelOfertado extends BaseEntity<Long> {
     @OneToMany(mappedBy = "imovelOfertado")
     @JsonIgnore
     public List<Match> matches;
+
+    public boolean hasMatches;
     
     @NotNull(message = "É necessário informar o id do cliente")
     public int usuario_id;

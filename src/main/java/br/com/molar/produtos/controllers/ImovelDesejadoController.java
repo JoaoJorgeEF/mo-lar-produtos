@@ -1,6 +1,7 @@
 package br.com.molar.produtos.controllers;
 
 import br.com.molar.produtos.entities.ImovelDesejado;
+import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.entities.Usuario;
 import br.com.molar.produtos.services.ImovelDesejadoService;
 import br.com.molar.produtos.services.UsuarioClient;
@@ -91,6 +92,18 @@ public class ImovelDesejadoController {
                     HttpStatus.NOT_FOUND, ex.getMessage());
         }
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/{id}/matches")
+    public List<ImovelOfertado> consultarMatchesdoImovel(@PathVariable("id") long id){
+        try {
+            return service.listarMatchesImoveisOfertados(id);
+        } catch(Exception ex){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
+
 
     @GetMapping("/{id}/enfileirar")
     public void enfileirar(@PathVariable long id){
