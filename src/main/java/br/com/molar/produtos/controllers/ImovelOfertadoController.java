@@ -1,5 +1,6 @@
 package br.com.molar.produtos.controllers;
 
+import br.com.molar.produtos.entities.ImovelDesejado;
 import br.com.molar.produtos.entities.ImovelOfertado;
 import br.com.molar.produtos.services.ImovelOfertadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,18 @@ public class ImovelOfertadoController {
                     HttpStatus.NOT_FOUND, ex.getMessage());
         }
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/{id}/matches")
+    public List<ImovelDesejado> consultarMatchesdoImovel(@PathVariable("id") long id){
+        try {
+            return service.listarMatchesImoveisDesejados(id);
+        } catch(Exception ex){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage());
+        }
+    }
+
 
     @GetMapping("/{id}/enfileirar")
     public void enfileirar(@PathVariable long id){

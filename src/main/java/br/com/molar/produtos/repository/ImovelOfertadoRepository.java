@@ -12,4 +12,7 @@ public interface ImovelOfertadoRepository extends JpaRepository<ImovelOfertado, 
 
     @Query(value = "select * from imoveis_ofertados idj where idj.usuario_id = :idUsuario", nativeQuery = true)
     List<ImovelOfertado> findByIdUsuario(long idUsuario);
+
+    @Query(value = "select * from imoveis_ofertados idj where idj.id = :idImovel", nativeQuery = true)
+    ImovelOfertado findByIdImovel(long idImovel);
 }
